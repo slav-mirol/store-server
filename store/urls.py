@@ -15,7 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import include
+from django.urls import include
+
+from store.products import views
+from store.users import views as views_users
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin', admin.site.urls),
+    path('', views.index, name='home'),
+    path('create', views.create),
+    path('user/create', views_users.CreateUserAPIView.as_view()),
+    path('user/update', views_users.UserRetrieveUpdateAPIView.as_view()),
+    path('user/auth', views_users.authenticate_user),
 ]
