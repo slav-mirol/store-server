@@ -24,8 +24,12 @@ from store.users import views as views_users
 urlpatterns = [
     path('admin', admin.site.urls),
     path('', views.index, name='home'),
-    path('create', views.create),
+    path('create-products', views.CreateProductAPIView.as_view()),
+    path('create-categories', views.CreateProductCategoryAPIView.as_view()),
+    path('get-products', views.ShowAllProducts.as_view()),
+    path('get-categories', views.ShowAllCategories.as_view()),
     path('user/create', views_users.CreateUserAPIView.as_view()),
     path('user/update', views_users.UserRetrieveUpdateAPIView.as_view()),
     path('user/auth', views_users.authenticate_user),
+    path('filter-products/category', views.ShowProductsFromCategory.as_view())
 ]

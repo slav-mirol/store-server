@@ -6,7 +6,7 @@ class ProductCategory(models.Model):
     description = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return f'Категория {self.name}'
+        return str(self.name)
 
 
 class Product(models.Model):
