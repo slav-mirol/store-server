@@ -20,6 +20,7 @@ from django.urls import include
 
 from store.products import views
 from store.users import views as views_users
+from store.orders import views as views_orders
 
 urlpatterns = [
     path('admin', admin.site.urls),
@@ -31,5 +32,7 @@ urlpatterns = [
     path('user/create', views_users.CreateUserAPIView.as_view()),
     path('user/update', views_users.UserRetrieveUpdateAPIView.as_view()),
     path('user/auth', views_users.authenticate_user),
-    path('filter-products/category', views.ShowProductsFromCategory.as_view())
+    path('filter-products/category', views.ShowProductsFromCategory.as_view()),
+    path('orders/create-cart', views_orders.CreateCart.as_view()),
+    path('orders/create-order', views_orders.CreateOrder.as_view()),
 ]

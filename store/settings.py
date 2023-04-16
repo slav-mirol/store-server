@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'store.products',
     'store.users',
+    'store.orders',
     'rest_framework',
     'rest_framework_simplejwt'
 

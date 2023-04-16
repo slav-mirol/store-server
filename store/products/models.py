@@ -18,4 +18,5 @@ class Product(models.Model):
     category = models.ForeignKey(to=ProductCategory, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'Продукт {self.name}'
+        return str(self.name)
+
