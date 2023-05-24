@@ -10,7 +10,7 @@ class ProductCategorySerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = Product
-        fields = ('name', 'description', 'price', 'quantity', 'category')
+        fields = ('name', 'description', 'price', 'image', 'quantity', 'category')
 
 
 class CategorySerializer(serializers.Serializer):
@@ -24,5 +24,5 @@ class ProductsSerializer(serializers.Serializer):
     description = serializers.CharField()
     price = serializers.DecimalField(max_digits=6, decimal_places=2)
     quantity = serializers.CharField()
-    # image = models.ImageField(upload_to='products_images')
+    image = serializers.CharField()
     category = serializers.CharField()

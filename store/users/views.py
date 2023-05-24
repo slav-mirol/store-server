@@ -38,9 +38,14 @@ def authenticate_user(request):
                 payload = jwt_payload_handler(user)
                 token = jwt.encode(payload, store.settings.SECRET_KEY)
                 user_details = {}
-                user_details['name'] = "%s %s" % (
-                    user.first_name, user.last_name)
+                user_info = {}
                 user_details['token'] = token
+                user_info['id'] = "%s" % (user.id)
+                user_info['email'] = "%s" % (user.email)
+                user_info['first_name'] = "%s" % (user.first_name)
+                user_info['last_name'] = "%s" % (user.last_name)
+                user_info['is_staff'] = "%s" % (user.is_staff)
+                user_details['user_info'] = user_info
                 user_logged_in.send(sender=user.__class__,
                                     request=request, user=user)
                 return Response(user_details, status=status.HTTP_200_OK)
