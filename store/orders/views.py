@@ -6,6 +6,7 @@ from store.orders.models import Cart, Order, OrderProduct
 from store.orders.serializers import CartSerializer, _CartSerializer, OrderSerializer, _OrderSerializer, \
     _FullInfoSerializer, _OrderProductSerializer
 from store.products.models import Product
+from store.products.serializers import ProductsSerializer
 
 
 class CreateCart(APIView):
@@ -28,7 +29,7 @@ class CreateOrder(APIView):
     def post(self, request):
         user = request.data
         wanted = Cart.objects.filter(id_user=user['id_user'])
-        # products = []
+
         serializer = OrderSerializer(data=user)
         serializer.is_valid(raise_exception=True)
         serializer.save()
@@ -45,3 +46,14 @@ class CreateOrder(APIView):
         serializer = _FullInfoSerializer(instance=ans)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+class GetUsersCart(APIView):
+    def get(self, request):
+        query = Cart.objects.filter(id_user=request.data['id_user'])
+        ans_products=[]
+        for i in query:
+            ans_products.append(Product.objects.get(name=i.id_product))
+
+        serializer = ProductsSerializer(instance=ans_products, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+

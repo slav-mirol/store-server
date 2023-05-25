@@ -37,7 +37,6 @@ class _OrderProductSerializer(serializers.Serializer):
     id_product = serializers.CharField(max_length=100)
 
 
-
 class _FullInfoSerializer(serializers.Serializer):
     order = _OrderSerializer()
     products = ProductsSerializer(many=True)

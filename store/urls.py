@@ -35,4 +35,5 @@ urlpatterns = [
     path('filter-products/category', views.ShowProductsFromCategory.as_view()),
     path('orders/create-cart', views_orders.CreateCart.as_view()),
     path('orders/create-order', views_orders.CreateOrder.as_view()),
+    path('cart/get-cart', views_orders.GetUsersCart.as_view()),
 ]
