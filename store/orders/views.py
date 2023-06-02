@@ -48,9 +48,10 @@ class CreateOrder(APIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 class GetUsersCart(APIView):
-    def get(self, request):
-        query = Cart.objects.filter(id_user=request.data['id_user'])
-        ans_products=[]
+    def get(self, request, user):
+        #user = request.GET.get("user")
+        query = Cart.objects.filter(id_user=user)
+        ans_products = []
         for i in query:
             ans_products.append(Product.objects.get(name=i.id_product))
 
