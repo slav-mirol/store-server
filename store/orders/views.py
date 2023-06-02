@@ -44,7 +44,7 @@ class CreateOrder(APIView):
             ids.append(i.id_product)
         ans = FullInfo(order, Product.objects.filter(name__in=ids))
         serializer = _FullInfoSerializer(instance=ans)
-
+        Cart.objects.filter(id_user=user['id_user']).delete()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 class GetUsersCart(APIView):
@@ -56,5 +56,19 @@ class GetUsersCart(APIView):
             ans_products.append(Product.objects.get(name=i.id_product))
 
         serializer = ProductsSerializer(instance=ans_products, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+class GetUsersOrders(APIView):
+    def get(self, request, user):
+        #user = request.GET.get("user")
+        query = Order.objects.filter(id_user=user)
+        ans = []
+        for order in query:
+            order_products = OrderProduct.objects.filter(id_order=order)
+            ids = []
+            for i in order_products:
+                ids.append(i.id_product)
+            ans.append(FullInfo(order, Product.objects.filter(name__in=ids)))
+        serializer = _FullInfoSerializer(instance=ans, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
