@@ -44,6 +44,7 @@ def authenticate_user(request):
                 user_info['email'] = "%s" % (user.email)
                 user_info['first_name'] = "%s" % (user.first_name)
                 user_info['last_name'] = "%s" % (user.last_name)
+                user_info['adress'] = "%s" % (user.adress)
                 user_info['is_staff'] = "%s" % (user.is_staff)
                 user_details['user_info'] = user_info
                 user_logged_in.send(sender=user.__class__,
