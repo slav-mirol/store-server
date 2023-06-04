@@ -13,7 +13,7 @@ class CartSerializer(serializers.ModelSerializer):
 class OrderSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = Order
-        fields = ('id_user', 'status', 'adress')
+        fields = ('id_user', 'status', 'adress', 'total')
 
 
 class OrderProductSerializer(serializers.ModelSerializer):
@@ -31,6 +31,8 @@ class _OrderSerializer(serializers.Serializer):
     id_user = serializers.CharField()
     adress = serializers.CharField(max_length=1000)
     status = serializers.CharField(max_length=100)
+    date_joined = serializers.CharField()
+    total = serializers.CharField()
 
 class _OrderProductSerializer(serializers.Serializer):
     id_order = serializers.CharField()
