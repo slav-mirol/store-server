@@ -72,3 +72,17 @@ class GetUsersOrders(APIView):
         serializer = _FullInfoSerializer(instance=ans, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+
+class ChangeOrderStatus(APIView):
+    def post(self, request):
+        data = request.data
+        cur_order = Order.objects.get(id=data['id_order'])
+        cur_order.status = data['new_status']
+        cur_order.save()
+        order_products = OrderProduct.objects.filter(id_order=cur_order.id)
+        ids = []
+        for i in order_products:
+            ids.append(i.id_product)
+        ans = FullInfo(cur_order, Product.objects.filter(name__in=ids))
+        serializer = _FullInfoSerializer(instance=ans)
+        return Response(serializer.data, status=status.HTTP_200_OK)
