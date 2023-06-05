@@ -3,8 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from store.orders.models import Cart, Order, OrderProduct
-from store.orders.serializers import CartSerializer, _CartSerializer, OrderSerializer, _OrderSerializer, \
-    _FullInfoSerializer, _OrderProductSerializer
+from store.orders.serializers import CartSerializer, OrderSerializer, _FullInfoSerializer
 from store.products.models import Product
 from store.products.serializers import ProductsSerializer
 
@@ -49,7 +48,6 @@ class CreateOrder(APIView):
 
 class GetUsersCart(APIView):
     def get(self, request, user):
-        #user = request.GET.get("user")
         query = Cart.objects.filter(id_user=user)
         ans_products = []
         for i in query:
@@ -60,7 +58,6 @@ class GetUsersCart(APIView):
 
 class GetUsersOrders(APIView):
     def get(self, request, user):
-        #user = request.GET.get("user")
         query = Order.objects.filter(id_user=user)
         ans = []
         for order in query:
@@ -85,4 +82,17 @@ class ChangeOrderStatus(APIView):
             ids.append(i.id_product)
         ans = FullInfo(cur_order, Product.objects.filter(name__in=ids))
         serializer = _FullInfoSerializer(instance=ans)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+class GetAllOrders(APIView):
+    def get(self, request):
+        query = Order.objects.all()
+        ans = []
+        for order in query:
+            order_products = OrderProduct.objects.filter(id_order=order)
+            ids = []
+            for i in order_products:
+                ids.append(i.id_product)
+            ans.append(FullInfo(order, Product.objects.filter(name__in=ids)))
+        serializer = _FullInfoSerializer(instance=ans, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
