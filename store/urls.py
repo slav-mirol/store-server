@@ -39,4 +39,5 @@ urlpatterns = [
     path('orders/get-orders/<int:user>', views_orders.GetUsersOrders.as_view()),
     path('orders/change-order-status', views_orders.ChangeOrderStatus.as_view()),
     path('orders/get-orders/all', views_orders.GetAllOrders.as_view()),
+    path('orders/check-cart', views_orders.CheckCartUser.as_view()),
 ]

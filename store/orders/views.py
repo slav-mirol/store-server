@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from store.orders.models import Cart, Order, OrderProduct
-from store.orders.serializers import CartSerializer, OrderSerializer, _FullInfoSerializer
+from store.orders.serializers import CartSerializer, OrderSerializer, _FullInfoSerializer, _CartSerializer
 from store.products.models import Product
 from store.products.serializers import ProductsSerializer
 
@@ -95,4 +95,11 @@ class GetAllOrders(APIView):
                 ids.append(i.id_product)
             ans.append(FullInfo(order, Product.objects.filter(name__in=ids)))
         serializer = _FullInfoSerializer(instance=ans, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+class CheckCartUser(APIView):
+    def post(self, request):
+        data = request.data
+        obj = Cart.objects.filter(id_user=data["id_user"], id_product=data["id_product"])
+        serializer = _CartSerializer(instance=obj, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
