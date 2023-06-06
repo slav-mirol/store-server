@@ -103,3 +103,11 @@ class CheckCartUser(APIView):
         obj = Cart.objects.filter(id_user=data["id_user"], id_product=data["id_product"])
         serializer = _CartSerializer(instance=obj, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+class DeleteRowCart(APIView):
+    def post(self, request):
+        data = request.data
+        obj = Cart.objects.get(id_user=data["id_user"], id_product=data["id_product"])
+        obj.delete()
+        ans = {"answer": "успешно удалено"}
+        return Response(ans, status=status.HTTP_200_OK)

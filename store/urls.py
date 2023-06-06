@@ -40,4 +40,5 @@ urlpatterns = [
     path('orders/change-order-status', views_orders.ChangeOrderStatus.as_view()),
     path('orders/get-orders/all', views_orders.GetAllOrders.as_view()),
     path('orders/check-cart', views_orders.CheckCartUser.as_view()),
+    path('orders/delete-cart', views_orders.DeleteRowCart.as_view()),
 ]
