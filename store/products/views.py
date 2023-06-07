@@ -56,3 +56,10 @@ class ShowProductsFromCategory(APIView):
         query = Product.objects.filter(category_id=category["id"])
         serializer = ProductsSerializer(instance=query, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+class DeleteProduct(APIView):
+    def post(self, request):
+        product = request.data
+        product.delete()
+        ans = {"answer": "успешно удалено"}
+        return Response(ans, status=status.HTTP_200_OK)
